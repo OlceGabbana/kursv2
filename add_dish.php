@@ -103,18 +103,18 @@ session_start();
                             $query_category->bindValue(':id_category', $id_category);
                             $query_category->execute();
                             
-                            $_SESSION['msg'] = 'Блюдо успешно добавлено!';
+                            $_SESSION['msg'] = ' green_msg">Блюдо успешно добавлено!';
                             
                         }
                     } else {
-                        $_SESSION['msg'] = 'Ошибка загрузки!';
+                        $_SESSION['msg'] = '">Ошибка загрузки!';
                     }
                 }
             ?>
             
             <?php
                 if(isset($_SESSION['msg'])) {
-                    echo '<p class="msg">'.$_SESSION['msg'].'</p>';
+                    echo '<p class="msg'.$_SESSION['msg'].'</p>';
                 } 
                 unset($_SESSION['msg']);
             ?>

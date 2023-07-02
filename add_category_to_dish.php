@@ -85,9 +85,9 @@ session_start();
                             $query_category->bindValue(':id_category', $id_category);
                             $res =  $query_category->execute();
                             if ($res){
-                                $_SESSION['msg'] = 'Категория успешно добавлена!';
+                                $_SESSION['msg'] = ' green_msg">Категория успешно добавлена!';
                             } else {
-                                $_SESSION['msg'] = 'Ошибка загрузки!';
+                                $_SESSION['msg'] = '">Ошибка загрузки!';
                             }
                     
                 }
@@ -95,7 +95,7 @@ session_start();
             ?>
             <?php
                 if(isset($_SESSION['msg'])) {
-                    echo '<p class="msg">'.$_SESSION['msg'].'</p>';
+                    echo '<p class="msg'.$_SESSION['msg'].'</p>';
                 } 
                 unset($_SESSION['msg']);
             ?>

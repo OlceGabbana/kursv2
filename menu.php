@@ -190,7 +190,7 @@ session_start();
                         if (isset($_SESSION['user'])) {
                             if ($_SESSION['user']['role_user'] == "Администратор") {
                                 echo '<form method="POST" name="delete_dish">
-                                    <button class="delete_dish" name="delete_dish" value="' . $dish[$i]['id_dish'] . '"><img src="assets/img/delete.svg"></button>
+                                    <button class="delete_dish" name="delete_dish" value="' . $dish[$i]['id_dish'] . '"><img src="assets/img/delete.svg" class="delete_img"></button>
                                     </form>
                                 ';
                             }
@@ -227,8 +227,8 @@ session_start();
 
                 if (isset($_POST['delete_dish'])) {
                     $id = $_POST['delete_dish'];
-                    $query = $connection->prepare("DELETE FROM `dishes` WHERE (`id_dish` = $id)");
-                    $query->bindParam("id_dish", $_POST['delete_dish'], PDO::PARAM_STR);
+                    $query = $connection->prepare("DELETE FROM `dishes` WHERE `id_dish` = :id");
+                    $query->bindParam(":id", $id, PDO::PARAM_STR);
                     $query->execute();
                     echo '<meta http-equiv="refresh" content="0">';
                     echo '<script>localStorage.clear();</script>';

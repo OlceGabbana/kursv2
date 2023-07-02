@@ -59,57 +59,68 @@ include 'vendor/connect.php';
                 <p>Что будем делать?</p>
                 <div class="func_admin">
                     <a href="menu.php?category=Завтраки"><button class="highlight">Перейти в редактор меню</button></a>
-                    <button class="highlight">Управлять бронированием</button>
+                    <a href="#orders"><button class="highlight">Просмотр заказов</button></a>
+                    <a href="#bookings"><button class="highlight">Управлять бронированием</button></a>
                 </div>
             </div>
+            
+        <h2 class="mini_header" id="orders">Заказы пользователей</h2>
         </section>
+        
 
-        <?php
-         try {
-            // SQL-запрос для выборки новостей из базы данных
-            // Предполагается, что у вас есть таблица "news" с колонками "title", "content" и "date"
+        <div class="page_bookings">
+            <div class="container_bookings">
+                <?php
+                try {
+                    // SQL-запрос для выборки новостей из базы данных
+                    // Предполагается, что у вас есть таблица "news" с колонками "title", "content" и "date"
 
-            // Выполнение SQL-запроса
-            $query = $connection->prepare("SELECT dishes.*, orders.*, users.name_user, users.phone_user ,orders_has_dishes.value FROM orders_has_dishes
+                    // Выполнение SQL-запроса
+                    $query = $connection->prepare("SELECT dishes.*, orders.*, users.name_user, users.phone_user ,orders_has_dishes.value FROM orders_has_dishes
                                         JOIN dishes ON orders_has_dishes.dishes_id_dish = dishes.id_dish
                                         JOIN orders ON orders_has_dishes.orders_id_order = orders.id_order
                                         JOIN users ON users.id_user = orders.users_id_user;");
-            $query->execute();
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
-            for ($i_orders = 0; $i_orders < count($result); $i_orders++) {
-                $id_order = $result[$i_orders]['id_order'];
-                $_FILES['orders'][$id_order]['name'] = $result[$i_orders]['name_user'];
-                $_FILES['orders'][$id_order]['phone'] = $result[$i_orders]['phone_user'];
-                $_FILES['orders'][$id_order]['sum_order'] = $result[$i_orders]['value'];
-                $_FILES['orders'][$id_order]['dishes'][0] = 'Товары:';
-                $_FILES['orders'][$id_order]['prices'][0] = 0;
-                $_FILES['orders'][$id_order]['kolvo'][0] = '';
-                array_push($_FILES['orders'][$id_order]['dishes'], $result[$i_orders]['name_dish']);
-                array_push($_FILES['orders'][$id_order]['prices'], $result[$i_orders]['price_dish']);
-                $_FILES['orders'][$id_order]['itog'] = $_FILES['orders'][$id_order]['prices'];
-                array_push($_FILES['orders'][$id_order]['kolvo'], $result[$i_orders]['value']);
-            }
-            // Перебор результатов и вывод новостей
-
-            foreach ($_FILES['orders'] as $key => $value) {
-                $name = $_FILES['orders'][$key]['name'];
-                $id_order = $key;
-                $phone = $_FILES['orders'][$key]['phone'];
-                $sum_order = $phone = $_FILES['orders'][$key]['sum_order'];
-                $dishes = $_FILES['orders'][$key]['dishes'];
-                $kolvo = $_FILES['orders'][$key]['kolvo'];
-                if ($_SESSION['user']['name_user'] == $name) {
-                    echo "<div class='bookings_block'><br><br>" . $id_order . "<br>" . $phone;
-                    for ($i = 0; $i < count($dishes); $i++) echo '<br>' . $dishes[$i] . ' - ' . $kolvo[$i] . ' шт.';
-                    echo "<br>Заказчик - " . $name . '<br>' . $sum_order . '</div>';
+                    $query->execute();
+                    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+                    for ($i_orders = 0; $i_orders < count($result); $i_orders++) {
+                        $id_order = $result[$i_orders]['id_order'];
+                        $_FILES['orders'][$id_order]['name'] = $result[$i_orders]['name_user'];
+                        $_FILES['orders'][$id_order]['phone'] = $result[$i_orders]['phone_user'];
+                        $_FILES['orders'][$id_order]['sum_order'] = $result[$i_orders]['value'];
+                        $_FILES['orders'][$id_order]['dishes'][0] = 'Товары:';
+                        $_FILES['orders'][$id_order]['prices'][0] = 0;
+                        $_FILES['orders'][$id_order]['kolvo'][0] = '';
+                        array_push($_FILES['orders'][$id_order]['dishes'], $result[$i_orders]['name_dish']);
+                        array_push($_FILES['orders'][$id_order]['prices'], $result[$i_orders]['price_dish']);
+                        $_FILES['orders'][$id_order]['itog'] = $_FILES['orders'][$id_order]['prices'];
+                        array_push($_FILES['orders'][$id_order]['kolvo'], $result[$i_orders]['value']);
+                    }
+                    // Перебор результатов и вывод новостей
+                    if (isset($_FILES['orders'])) {
+                        foreach ($_FILES['orders'] as $key => $value) {
+                            $name = $_FILES['orders'][$key]['name'];
+                            $id_order = $key;
+                            $phone = $_FILES['orders'][$key]['phone'];
+                            $sum_order = $_FILES['orders'][$key]['sum_order'];
+                            $dishes = $_FILES['orders'][$key]['dishes'];
+                            $kolvo = $_FILES['orders'][$key]['kolvo'];
+                            echo "<div class='bookings_block book_bl_p'><p>Номер заказа: " . $id_order . "<hr></p>";
+                            for ($i = 0; $i < count($dishes); $i++) echo '<p>' . $dishes[$i] . ' - ' . $kolvo[$i] . ' шт.';
+                            echo "</p><hr><p>Заказчик: " . $name . "</p><p>" . $phone . "</p><p>Сумма: " . $sum_order . "</p></div>";
+                        }
+                    } else {
+                        echo "<div class='bookings_block'>Вы ничего не заказали!</div>";
+                    }
+                } catch (PDOException $e) {
+                    echo "Ошибка: " . $e->getMessage();
                 }
-            }
-        } catch (PDOException $e) {
-            echo "Ошибка: " . $e->getMessage();
-        }
-
-        
-
+                ?>
+            </div>
+        </div>
+        <section class="main_landing">
+            <h2 class="mini_header" id="bookings">Бронирования пользователей</h2>
+        </section>
+        <?php
         include 'contacts.php';
         include 'footer.php';
         ?>

@@ -72,18 +72,15 @@
                     </a>
                 </div>
             </section>
-            <h3 class="mini_header" >Доставка</h3>
+            <h3 class="mini_header" >Заказ</h3>
             <section class="block">
                 <div class="text_col">
-                    <h2 class="maxi_header">Служба доставки</h2>
+                    <h2 class="maxi_header">Заказ блюд на самовывоз</h2>
                 </div>
                 <div class="text_col">
                     <p>Sed vel ornare ut rhoncus, ac ut nibh. Amet at sit et nibh. In lectus phasellus non ornare eget velit. Facilisi urna, tristique dui, rhoncus, dolor. Tincidunt enim gravida dignissim leo pulvinar sit volutpat nulla vestibulum. </p>
                     <p>Morbi pellentesque enim massa laoreet vel id. Lectus ac, facilisis neque turpis. Morbi massa enim nullam sem vehicula. Amet quis pellentesque enim porttitor lectus interdum. Nisi, faucibus pharetra at porttitor. Fringilla luctus pretium in viverra. In adipiscing tempor amet malesuada ullamcorper ut sagittis. Dui, scelerisque vulputate risus massa dictum. Cras at quis in eu, faucibus feugiat vel. At.</p>
-                    <div class="buttons_delivery">
-                        <button class="btn">Подробнее</button>
-                        <button class="btn_opacity">Условия доставки</button>
-                    </div>
+                    
                 </div>
             </section>                
             <?php 
