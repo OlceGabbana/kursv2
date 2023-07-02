@@ -1,7 +1,7 @@
 
 <?php
         session_start();
-        include 'config.php';
+        include 'vendor/connect.php';
         if(isset($_POST['myArray'])){
         $myArray = $_POST['myArray'];
       
@@ -10,12 +10,11 @@
       
         try {
           
-          if (!isset($_SESSION['user_id'])) {
+          if (!isset($_SESSION['user'])) {
             echo 'Нужно войти в аккаунт';
           } else {
-
-          print_r($_SESSION);
-          $stmt1 = $connection->prepare("INSERT INTO `orders`(`date_order`, `sum_order`, `users_id_user`) VALUES (CURRENT_DATE(), 2,".$_SESSION['user_id'].")");
+          $date = date('Y-m-d H:i:s');
+          $stmt1 = $connection->prepare("INSERT INTO `orders`(`date_order`, `sum_order`, `users_id_user`) VALUES ('$date',". $_SESSION['orders']['LastOrder']['total_price'] .",".$_SESSION['user']['id_user'].")");
           $stmt1->execute();
           
           
@@ -26,21 +25,6 @@
           $stmt = $connection->prepare("INSERT INTO orders_has_dishes (`orders_id_order`, `dishes_id_dish`, `value`) VALUES ('$order_id' , :dishes_id_dish, :kolvo)");
           
           
-
-        // Получение ID последней вставленной записи в таблицу orders
-        $order_id = $connection->lastInsertId();
-        $_SESSION['IDZAKAZA'] = $order_id+1;
-        print_r($_SESSION['IDZAKAZA']);
-             // Получение ID элемента из переменной $_SERVER
-          if (isset($_SESSION['IDZAKAZA'])) {
-            $elementId = $_SESSION['IDZAKAZA'];
-          } else {
-            $elementId = 'NaN';
-          }
-    
-
-    // Передача переменной $elementId в JavaScript
-    echo "<script>var elementId = '". $elementId ."';</script>";
 
         // Удаляем квадратные скобки из строки
         $myArray = str_replace(['{', '}', '"'], '', $myArray);
@@ -57,12 +41,10 @@
           $array1[$i]['value'] =  strstr($str, ':');
           $array1[$i]['value'] = mb_substr($array1[$i]['value'], 1);
         }
-        print_r($array1);
           $index = 0;
           foreach ($array1 as $value) {
-            $array1[$index]['id']++;
             // Привязка значения к параметру запроса
-            $stmt->bindParam(':dishes_id_dish', $array1[$index]['id']);
+            $stmt->bindParam(':dishes_id_dish', $_SESSION['dishes'][$index]);
             $stmt->bindParam(':kolvo', $array1[$index]['value']);
             $index++;
             // Выполнение запроса
@@ -71,7 +53,7 @@
       
       
           // Возвращение ответа
-          echo 'Массив успешно записан в базу данных!';
+          echo 'Заказ оформлен';
         }
         } catch(PDOException $e) {
           // Обработка ошибок подключения к базе данных

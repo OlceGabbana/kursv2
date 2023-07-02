@@ -1,6 +1,6 @@
 var bucket;
 AllSum("allsum1");
-
+showCart("modal_content_table");
 //Добавление продукта
 function addProduct(numb) {
   if (localStorage.length < 16) {
@@ -65,6 +65,8 @@ function showCart(id) {
   }
 
   const name_dish = document.querySelectorAll(".name_dish");
+  const id_db = document.querySelectorAll('[id_db]');
+  console.log(id_db);
   const price_dish = document.querySelectorAll(".price_dish");
   for (let i = 0; i < localStorage.length; i++) {
     for (let id_res = 0; id_res < name_dish.length; id_res++) {
@@ -198,23 +200,5 @@ function open_modal(id) {
   document.getElementById("overlay").style.display = "block";
 }
 
-OpenModalBtn('openModalBtn_order');
 
 
-//запись в базу
-function addDB() {
-  var myArray = localStorage;
-  var xhr = new XMLHttpRequest();
-  var url = 'myfile.php';
-  xhr.open('POST', url, true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-  if (xhr.readyState === 4 && xhr.status === 200) {
-      console.log(xhr.responseText); // Обработка ответа от сервера
-  }
-  };
-
-  var params = 'myArray=' + encodeURIComponent(JSON.stringify(myArray));
-  xhr.send(params);
-  
-}

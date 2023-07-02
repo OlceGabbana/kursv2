@@ -12,8 +12,8 @@ include('vendor/connect.php');
     <link rel="stylesheet" href="assets/style/style.css">
     <link rel="stylesheet" href="assets/style/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="assets/js/main.js"></script>
     <title>Кафе здорового питания Olce&Gabbana</title>
-    <script src="assets/js/addDB.js"></script>
 </head>
 
 <body>
@@ -75,16 +75,17 @@ include('vendor/connect.php');
         <?php
         if (isset($_POST['checkout_button'])) {
             $_SESSION['orders']['LastOrder']['total_price'] = $_POST['total_price'];
-            echo '<script>addDB()</script>';
+            echo $_SESSION['orders']['LastOrder']['total_price'];
+            // echo '<script>addDB()</script>';
         }
         echo '<div class="dishes">';
         $query_dish = $connection->prepare("SELECT * FROM dishes JOIN dishes_has_categories ON id_dish = dishes_has_categories.dishes_id_dish JOIN categories ON id_category = dishes_has_categories.categories_id_category;");
         $result_dish = $query_dish->execute();
         $dish = $query_dish->fetchAll(PDO::FETCH_ASSOC);
         for ($i = 0; $i < count($dish); $i++) {
-                $_SESSION['dishes'][$i] = $dish[$i]['id_dish'];
+            for ($ind = 0; $ind < count($dish); $ind++) {
                 $sravn[$dish[$i]['id_dish']] = $i;
-                
+            }
         }
         for ($i = 0; $i < count($dish); $i++) {
             echo '<div class="dish" style="display: none;">
@@ -109,7 +110,7 @@ include('vendor/connect.php');
         include 'footer.php';
         ?>
     </section>
-    <script src="assets/js/main.js"></script>
+    
 </body>
 
 </html>
