@@ -612,8 +612,8 @@ footer {
   font-size: 1em;
   padding: 2vh 2vw;
 }
-.book_bl_p{
-    font-size: 1em;
+.book_bl_p {
+  font-size: 1em;
 }
 .bookings_item {
   height: 300px;
@@ -823,6 +823,43 @@ footer {
 }
 
 @media screen and (max-width: 800px) {
+  
+  .landing_page {
+    padding-left: 0;
+    height: max-content;
+    width: auto;
+  }
+  .left_panel {
+    display: none;
+  }
+  .main_fs h1 {
+    margin: 40vh 0 0 2vw;
+    font-size: 1.5em;
+  }
+  header nav {
+    width: 100vw;
+    position: fixed;
+    top: -100vh;
+  }
+  header nav ul {
+    margin: 0 auto;
+    font-size: 1em;
+    flex-direction: column;
+  }
+  header nav li {
+    text-align: center;
+    margin: 2vw;
+    padding: 1vw;
+  }
+  #side_menu:checked nav {
+    transition: all 0.5s;
+    top: 0;
+    z-index: 9999;
+    height: max-content;
+    background-color: #333333;
+  }
+
+  /*------------------------------------------------------------------*/
   .mobile_menu {
     display: flex;
     flex-direction: row;
@@ -872,9 +909,9 @@ footer {
   .side_menu_img {
     display: block;
   }
-  /* .side_menu:checked ~ nav{
-        max-height: 100%;
-      } */
+   .side_menu:checked ~ nav{
+            max-height: 100%;
+    } 
   .side_menu:checked ~ .hamb .hamb_line {
     background: transparent;
   }
@@ -883,49 +920,13 @@ footer {
     width: 100%;
     top: 0;
   }
-  .side_menu:checked ~ .hamb .hamb_line::after {
+  .side_menu:checked ~ .hamb .hamb_line::after  {
     transform: rotate(45deg);
     width: 100%;
     top: 0;
   }
 
   /*---------------------------------------*/
-  .landing_page {
-    padding-left: 0;
-    height: max-content;
-    width: auto;
-  }
-  .left_panel {
-    display: none;
-  }
-  .main_fs h1 {
-    margin: 40vh 0 0 2vw;
-    font-size: 1.5em;
-  }
-  header nav {
-    width: 100vw;
-    position: fixed;
-    top: -100vh;
-  }
-  header nav ul {
-    margin: 0 auto;
-    font-size: 1em;
-    flex-direction: column;
-  }
-  header nav li {
-    text-align: center;
-    margin: 2vw;
-    padding: 1vw;
-  }
-  #side_menu:checked nav {
-    transition: all 0.5s;
-    top: 0;
-    z-index: 9999;
-    height: max-content;
-    background-color: #333333;
-  }
-
-  /*------------------------------------------------------------------*/
   .buttons_delivery {
     padding: 5%;
     font-size: 0.9em;
