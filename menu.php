@@ -20,9 +20,9 @@ session_start();
         function swalfunc() {
             Swal.fire({
                 icon: 'error',
-                title: 'wsdwds',
-                text: 'Something went wrong!',
-                footer: '<a href="register.php">Why do I have this issue?</a>',
+                title: 'Вы не авторизованы',
+                text: 'Пожалуйста авторизируйтесь, чтобы продолжить оформление заказа!',
+                footer: '<a href="login.php">Войти в аккаунт</a>',
             })
         }
     </script>

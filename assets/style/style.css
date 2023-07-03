@@ -852,13 +852,12 @@ footer {
     margin: 40vh 0 0 2vw;
     font-size: 1.5em;
   }
-
   /*------------------------------------------------------------------*/
- 
+
   header nav {
     width: 100vw;
     position: absolute;
-    top: -400px;
+    top: -500px;
     transition: all 1s;
   }
   header nav ul {
@@ -874,29 +873,29 @@ footer {
   #side_menu:checked nav {
     transition: all 0.5s;
     top: 0;
-    z-index: 99999;
+    z-index: 999;
     height: max-content;
-    background-color: #333333;
+    background-color: #3333338d;
   }
   .mobile_menu {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: #333333;
+    background-color: #333;
   }
-  .mobile_menu a {
-    padding: 0px;
+  .side_menu_img {
+    padding: 30px;
     margin: 0;
   }
   .hamb {
     display: block;
-    z-index: 999;
+    z-index: 99999;
     padding: 30px;
     width: 35px;
   }
   .hamb_line {
-    z-index: 999;
+    z-index: 99999;
     background: #b59571;
     display: block;
     height: 3px;
@@ -907,7 +906,7 @@ footer {
   }
   .hamb_line::before,
   .hamb_line::after {
-    z-index: 999;
+    z-index: 99999;
     background: #b59571;
     content: "";
     display: block;
@@ -918,23 +917,24 @@ footer {
   .hamb_line::before {
     width: 65%;
     top: 10px;
-    z-index: 999;
+    z-index: 99999;
   }
   .hamb_line::after {
     top: -10px;
-    z-index: 999;
+    z-index: 999999;
     width: 45%;
   }
   .side_menu_img {
     display: block;
+    z-index: 99999;
   }
   #side_menu:checked ~ nav {
     max-height: 100%;
-    top: 60px;
-    background-color: #333;
+    top: 95px;
+    background-color: #333333;
     z-index: 9999;
   }
-  #side_menu:checked ~ nav a{
+  #side_menu:checked ~ nav a {
     color: #fff;
   }
 
