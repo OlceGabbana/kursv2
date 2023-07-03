@@ -615,6 +615,9 @@ footer {
 .book_bl_p {
   font-size: 1em;
 }
+.book_bl_p span {
+  font-weight: 700;
+}
 .bookings_item {
   height: 300px;
   display: flex;
@@ -712,6 +715,7 @@ footer {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  text-align: center;
 }
 
 .close {
@@ -772,6 +776,12 @@ footer {
   width: 70%;
   align-items: center;
 }
+.foot_make_order {
+  width: 80vw;
+  width: 100%;
+  justify-content: space-around;
+  margin: 10vh auto 2vh auto;
+}
 .foot_modal_form p {
   font-size: 1.3em;
 }
@@ -781,6 +791,13 @@ footer {
   border: none;
   font-size: 1.1em;
   font-weight: 700;
+  text-align: center;
+}
+.cart-table-make {
+  font-size: 1.2em;
+  max-width: 80vw;
+  width: 100%;
+  margin: 5vh auto;
   text-align: center;
 }
 .delBuscket,
@@ -823,7 +840,6 @@ footer {
 }
 
 @media screen and (max-width: 800px) {
-  
   .landing_page {
     padding-left: 0;
     height: max-content;
@@ -836,10 +852,14 @@ footer {
     margin: 40vh 0 0 2vw;
     font-size: 1.5em;
   }
+
+  /*------------------------------------------------------------------*/
+ 
   header nav {
     width: 100vw;
-    position: fixed;
-    top: -100vh;
+    position: absolute;
+    top: -400px;
+    transition: all 1s;
   }
   header nav ul {
     margin: 0 auto;
@@ -854,12 +874,10 @@ footer {
   #side_menu:checked nav {
     transition: all 0.5s;
     top: 0;
-    z-index: 9999;
+    z-index: 99999;
     height: max-content;
     background-color: #333333;
   }
-
-  /*------------------------------------------------------------------*/
   .mobile_menu {
     display: flex;
     flex-direction: row;
@@ -868,7 +886,8 @@ footer {
     background-color: #333333;
   }
   .mobile_menu a {
-    padding: 30px;
+    padding: 0px;
+    margin: 0;
   }
   .hamb {
     display: block;
@@ -909,18 +928,25 @@ footer {
   .side_menu_img {
     display: block;
   }
-   .side_menu:checked ~ nav{
-            max-height: 100%;
-    } 
-  .side_menu:checked ~ .hamb .hamb_line {
+  #side_menu:checked ~ nav {
+    max-height: 100%;
+    top: 60px;
+    background-color: #333;
+    z-index: 9999;
+  }
+  #side_menu:checked ~ nav a{
+    color: #fff;
+  }
+
+  #side_menu:checked ~ .hamb .hamb_line {
     background: transparent;
   }
-  .side_menu:checked ~ .hamb .hamb_line::before {
+  #side_menu:checked ~ .hamb .hamb_line::before {
     transform: rotate(-45deg);
     width: 100%;
     top: 0;
   }
-  .side_menu:checked ~ .hamb .hamb_line::after  {
+  .side_menu:checked ~ .hamb .hamb_line::after {
     transform: rotate(45deg);
     width: 100%;
     top: 0;
@@ -1111,11 +1137,18 @@ footer {
     margin: 0;
   }
   .foot_modal {
+    margin: 1vh auto;
     flex-direction: column;
   }
   .foot_modal_form {
     width: 100%;
     flex-direction: column;
+  }
+  .cart-table-make {
+    font-size: 0.8em;
+    width: 100vw;
+    margin: 2vh auto;
+    text-align: center;
   }
   .delBuscket,
   .checkout_button {

@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Компьютерный клуб "GRADIENT"</title>
+  <title>Кафе здорового питания Olce&Gabbana</title>
 </head>
 
 <body>
@@ -41,6 +41,8 @@ if (!isset($_SESSION['user'])) {
 
   <section class="landing_page">
     <section class="main_landing">
+      
+    <h2 class="maxi_header">Бронирование столика</h2>
       
   <?php
   include 'vendor/connect.php';
@@ -116,26 +118,27 @@ if (!isset($_SESSION['user'])) {
             if (!isset($numb[$_POST['time_booking']][$i])) {
               $query = $connection->prepare("INSERT INTO `reservations` (`date_reservation`, `time_begin_reservation`, `duration_reservation`, `has_id_user`, `has_id_table`) VALUES ('" . date("y-m-d H:i:s") . "', '$datetime_booking', '$duration_booking', '" . $_SESSION['user']['id_user'] . "', $i);");
               $result = $query->execute();
-              echo 'Успешно! ---- ваш столик под номером - ' . $i . '<br>';
+              $_SESSION['msg'] = ' green_msg">Успешно! Ваш столик под номером - ' . $i;
               break 2;
             }
           }
         }
       } else {
-        echo 'На это время все столики заняты';
+        $_SESSION['msg'] = '">На это время все столики заняты!';
       }
     } else {
       $query = $connection->prepare("INSERT INTO `reservations` (`date_reservation`, `time_begin_reservation`, `duration_reservation`, `has_id_user`, `has_id_table`) VALUES ('" . date("y-m-d H:i:s") . "', '$datetime_booking', '$duration_booking', '" . $_SESSION['user']['id_user'] . "', '1');
                 ");
       $result = $query->execute();
-      echo 'Успешно! ---- ваш столик под номером - 1<br>';
+      $_SESSION['msg'] = ' green_msg">Успешно! Ваш столик под номером - ' . $i;
     }
   }
   ?>
 
   <section class="form_inputs">
-    <form action="" method="post">
-      <div class="form_row">
+    <form action="" method="post" class="signup_form">
+      <div class="form_element">
+        
         <label for="date_booking">Выберите дату</label>
         <select name="date_booking" id="date_booking"> <!-- Дата бронирования -->
           <?php
@@ -150,25 +153,32 @@ if (!isset($_SESSION['user'])) {
           ?>
         </select>
       </div>
-      <div class="form_row">
+      <div class="form_element">
         <label for="time_booking">Выберите время</label> <!-- Даты для бронирования -->
         <select name="time_booking" id="time_booking">
           <?php
-          for ($i = 0; $i < 24; $i++) {
+          for ($i = 9; $i < 23; $i++) {
             if (isset($numb[$i]) == $i) {
-              echo "<option style='color: yellow;' value='$i'>$i:00</option>";
+              echo "<option value='$i'>$i:00</option>";
             } else {
-              echo "<option style='color: black;' value='$i'>$i:00</option>";
+              echo "<option value='$i'>$i:00</option>";
             }
           }
           ?>
         </select>
       </div>
-      <button type="submit" id="button_booking" value="button_booking" name="button_booking">Забронировать</button>
+      <button class="btn highlight" type="submit" id="button_booking" value="button_booking" name="button_booking">Забронировать</button>
     </form>
+    <?php
+                if(isset($_SESSION['msg'])) {
+                    echo '<p class="msg'.$_SESSION['msg'].'</p>';
+                } 
+                unset($_SESSION['msg']);
+            ?>
   </section>
 </section>
   <?php
+    include 'contacts.php';
     include 'footer.php';  
   ?>
  

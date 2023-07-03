@@ -63,10 +63,10 @@ include 'vendor/connect.php';
                     <a href="#bookings"><button class="highlight">Управлять бронированием</button></a>
                 </div>
             </div>
-            
-        <h2 class="mini_header" id="orders">Заказы пользователей</h2>
+
+            <h2 class="mini_header" id="orders">Заказы пользователей</h2>
         </section>
-        
+
 
         <div class="page_bookings">
             <div class="container_bookings">
@@ -79,14 +79,14 @@ include 'vendor/connect.php';
                     $query = $connection->prepare("SELECT dishes.*, orders.*, users.name_user, users.phone_user ,orders_has_dishes.value FROM orders_has_dishes
                                         JOIN dishes ON orders_has_dishes.dishes_id_dish = dishes.id_dish
                                         JOIN orders ON orders_has_dishes.orders_id_order = orders.id_order
-                                        JOIN users ON users.id_user = orders.users_id_user;");
+                                        JOIN users ON users.id_user = orders.users_id_user ORDER BY `orders`.`id_order` DESC;");
                     $query->execute();
                     $result = $query->fetchAll(PDO::FETCH_ASSOC);
                     for ($i_orders = 0; $i_orders < count($result); $i_orders++) {
                         $id_order = $result[$i_orders]['id_order'];
                         $_FILES['orders'][$id_order]['name'] = $result[$i_orders]['name_user'];
                         $_FILES['orders'][$id_order]['phone'] = $result[$i_orders]['phone_user'];
-                        $_FILES['orders'][$id_order]['sum_order'] = $result[$i_orders]['value'];
+                        $_FILES['orders'][$id_order]['sum_order'] = $result[$i_orders]['sum_order'];
                         $_FILES['orders'][$id_order]['dishes'][0] = 'Товары:';
                         $_FILES['orders'][$id_order]['prices'][0] = 0;
                         $_FILES['orders'][$id_order]['kolvo'][0] = '';
@@ -104,9 +104,9 @@ include 'vendor/connect.php';
                             $sum_order = $_FILES['orders'][$key]['sum_order'];
                             $dishes = $_FILES['orders'][$key]['dishes'];
                             $kolvo = $_FILES['orders'][$key]['kolvo'];
-                            echo "<div class='bookings_block book_bl_p'><p>Номер заказа: " . $id_order . "<hr></p>";
+                            echo "<div class='bookings_block book_bl_p'><p>Номер заказа: <span>" . $id_order . "</span><hr></p>";
                             for ($i = 0; $i < count($dishes); $i++) echo '<p>' . $dishes[$i] . ' - ' . $kolvo[$i] . ' шт.';
-                            echo "</p><hr><p>Заказчик: " . $name . "</p><p>" . $phone . "</p><p>Сумма: " . $sum_order . "</p></div>";
+                            echo "</p><hr><p>Заказчик: <span>" . $name . "</span></p><p><span>" . $phone . "</span></p><p>Сумма: <span>" . $sum_order . "</span></p></div>";
                         }
                     } else {
                         echo "<div class='bookings_block'>Вы ничего не заказали!</div>";
@@ -119,6 +119,43 @@ include 'vendor/connect.php';
         </div>
         <section class="main_landing">
             <h2 class="mini_header" id="bookings">Бронирования пользователей</h2>
+            <form action="" method="post">
+                <div class="page_bookings">
+
+                    <div class="container_bookings">
+                        <?php
+                        $query = $connection->prepare("SELECT reservations.*, tables.*, users.*
+                                                FROM reservations
+                                                JOIN tables ON reservations.has_id_table = tables.id_table
+                                                JOIN users ON reservations.has_id_user = id_user;");
+                        $result = $query->execute();
+                        $reservations = $query->fetchAll(PDO::FETCH_ASSOC);
+                        for ($i = 0; $i < count($reservations); $i++) {
+
+                            $barcode = 100000000000 + strtotime($reservations[$i]['date_reservation']) + $reservations[$i]['id_reservation'] + $reservations[$i]['id_user'];
+                            echo '
+                         <div class="bookings_block">
+                            <div class="bookings_item"> 
+                                <span style="text-align: center;">OOO «OLCE&GABBANA»</span>
+                                <p>Кассовый чек № ' . $reservations[$i]['id_reservation'] . '</p>
+                                <hr>
+                                <p>Дата бронирования: <br> ' . $reservations[$i]['date_reservation'] . '</p>
+                                <p>Начало действия брони: <br> <strong>' . $reservations[$i]['time_begin_reservation'] . '</strong></p>
+                                <div class="check_between"> <span>Столик №</span><span>' . $reservations[$i]['has_id_table'] . '</span> </div>
+                                <div class="check_between"> <span>Длительность:</span><span>1 ЧАС</span> </div>
+                                <div class="check_between"> <span>ИТОГО К ОПЛАТЕ</span><span>= ' . $reservations[$i]['price_hour_table'] . '&#8381;</span></div>
+                            </div>
+                            <div class="check_between">
+                                <button class="delete_reservation" name="delete_reservation" type="submit" value="' . $reservations[$i]['id_reservation'] . '">Удалить</button>
+                            </div>
+                            
+                        </div>
+                        ';
+                        }
+                        ?>
+
+                    </div>
+            </form>
         </section>
         <?php
         include 'contacts.php';

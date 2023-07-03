@@ -46,10 +46,12 @@ include('vendor/connect.php');
     </header>
 
     <section class="landing_page">
+        <section class="main_landing">
+        <h2 class="maxi_header">Оформление заказа</h2>
         <div id="allsum1"></div>
 
         <form action="" method="post">
-            <table id="cart-table">
+            <table id="cart-table" class="cart-table-make">
                 <thead>
                     <tr>
                         <th>Название блюда</th>
@@ -61,12 +63,13 @@ include('vendor/connect.php');
                 <tbody id="modal_content_table">
                 </tbody>
             </table>
-            <div class="foot_modal">
+            <div class="foot_modal foot_make_order">
                 <div id="delBuscket" style="display:none;"></div>
-                <div class="foot_modal_form">
+                <div class="foot_modal_form ">
                     <p>Итоговая сумма заказа: <input type="text" readonly="readonly" id="total-price" name="total_price" value="" /> &#8381;</p>
                     <?php
-                    if (isset($_SESSION['user'])) echo '<button id="checkout_button" class="checkout_button" type="submit" name="checkout_button">Оформить заказ</button>';
+                    if (isset($_SESSION['user'])) echo '<button id="checkout_button" 
+                    class="checkout_button" type="submit" name="checkout_button">Оформить заказ</button>';
                     else echo '<button id="checkout_button" class="checkout_button" name="checkout_button">Оформить заказ</button>';
                     ?>
                 </div>
@@ -76,6 +79,12 @@ include('vendor/connect.php');
         if (isset($_POST['checkout_button'])) {
             $_SESSION['orders']['LastOrder']['total_price'] = $_POST['total_price'];
             echo '<script>addDB()</script>';
+            echo '<script>let lengthStorage = localStorage.length;
+            for (let i = 0; i < lengthStorage; i++) {
+              let n = localStorage.key(0);
+              localStorage.removeItem(n);
+            }</script>';
+            echo '<script>window.location = "accountUser.php";</script>'; 
         }
         echo '<div class="dishes">';
         $query_dish = $connection->prepare("SELECT * FROM dishes JOIN dishes_has_categories ON id_dish = dishes_has_categories.dishes_id_dish JOIN categories ON id_category = dishes_has_categories.categories_id_category;");
@@ -104,7 +113,9 @@ include('vendor/connect.php');
                                 </div>
                             </div>';
         }
-
+        ?>
+        </section>
+        <?php
         include 'contacts.php';
         include 'footer.php';
         ?>

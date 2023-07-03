@@ -110,10 +110,10 @@ if(isset($_SESSION['user'])){
                                     "email_user" => $user['email_user']
                                 ];
                                 
-                                $_SESSION['msg'] = 'Регистрация прошла успешно!';
+                                $_SESSION['msg'] = ' green_msg">Регистрация прошла успешно!';
                                 echo '<script>window.location = "login.php";</script>'; 
                             } else { 
-                                $_SESSION['msg'] = 'Неверные данные!';
+                                $_SESSION['msg'] = '">Неверные данные!';
                             } 
                                 
                         } 
@@ -125,7 +125,7 @@ if(isset($_SESSION['user'])){
             ?>
             <?php
                 if(isset($_SESSION['msg'])) {
-                    echo '<p class="msg">'.$_SESSION['msg'].'</p>';
+                    echo '<p class="msg'.$_SESSION['msg'].'</p>';
                 } 
                 unset($_SESSION['msg']);
             ?>
