@@ -81,8 +81,7 @@ if (isset($_SESSION['user'])) {
                             ];
                             
                             switch ($_SESSION['user']['role_user']){ 
-                            case "Пользователь": $redirect_url = "accountUser.php"; break; 
-                            case "Модератор": $redirect_url = "accountModer.php"; break; 
+                            case "Пользователь": $redirect_url = "accountUser.php"; break;  
                             case "Администратор": $redirect_url = "accountAdmin.php"; break; 
                             default: $redirect_url = "accountUser.php"; 
                             }
