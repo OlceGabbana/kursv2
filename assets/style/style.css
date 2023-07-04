@@ -619,7 +619,7 @@ footer {
   font-weight: 700;
 }
 .bookings_item {
-  height: 300px;
+  height: 340px;
   display: flex;
   padding: 20px;
   flex-direction: column;

@@ -22,6 +22,15 @@ include 'vendor/connect.php';
     <?php
     include 'left_panel.php';
     ?>
+    <?php
+        
+        if (isset($_POST['delete_reservation'])) {
+            $query = $connection->prepare("DELETE FROM `reservations` WHERE id_reservation=:id_reservation");
+            $query->bindParam("id_reservation", $_POST['delete_reservation'], PDO::PARAM_STR);
+            $query->execute();
+            echo '<meta http-equiv="refresh" content="0">';
+        }
+        ?>
     <header class="for_menu">
         <div class="mobile_menu">
             <input class="side_menu" type="checkbox" id="side_menu" />
@@ -144,6 +153,7 @@ include 'vendor/connect.php';
                                 <div class="check_between"> <span>Столик №</span><span>' . $reservations[$i]['has_id_table'] . '</span> </div>
                                 <div class="check_between"> <span>Длительность:</span><span>1 ЧАС</span> </div>
                                 <div class="check_between"> <span>ИТОГО К ОПЛАТЕ</span><span>= ' . $reservations[$i]['price_hour_table'] . '&#8381;</span></div>
+                                <div class="check_between"><span>Заказчик: </span><span>'. $reservations[$i]['phone_user'] .'</span></div>
                             </div>
                             <div class="check_between">
                                 <button class="delete_reservation" name="delete_reservation" type="submit" value="' . $reservations[$i]['id_reservation'] . '">Удалить</button>
